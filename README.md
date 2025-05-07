@@ -1,9 +1,10 @@
 # Dashboard app template
 Starter point for build a fullstack dashboard app use:
-    - golang
-    - gin
-    - templ
-    - html
+
+- golang
+- gin
+- templ
+- html
 
 ## Run
 ```sh
