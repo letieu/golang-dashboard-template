@@ -1,8 +1,9 @@
 # Dashboard app template
-- golang
-- gin
-- templ
-- html
+Starter point for build a fullstack dashboard app use:
+    - golang
+    - gin
+    - templ
+    - html
 
 ## Run
 ```sh
@@ -13,5 +14,5 @@ templ generate -watch -cmd "go run main.go"
 tailwindcss -i views/styles/input.css -o static/main.css -w
 ```
 
-## Full component example
+## Full HTML component example
 [Tailadmin example](https://github.com/letieu/tailadmin)
