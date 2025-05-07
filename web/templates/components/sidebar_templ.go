@@ -29,7 +29,7 @@ func sideBarHeader() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div :class=\"sidebarToggle ? &#39;justify-center&#39; : &#39;justify-between&#39;\" class=\"sidebar-header flex items-center gap-2 pb-7 pt-8\"><a href=\"index.html\"><div class=\"logo flex items-center gap-2\" :class=\"sidebarToggle ? &#39;hidden&#39; : &#39;&#39;\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-brand-600\"></i> <span class=\"text-xl font-medium dark:text-white/90\">Chatpilot</span></div><span class=\"logo-icon\" :class=\"sidebarToggle ? &#39;lg:block&#39; : &#39;hidden&#39;\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-brand-600\"></i></span></a></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div :class=\"sidebarToggle ? &#39;justify-center&#39; : &#39;justify-between&#39;\" class=\"sidebar-header flex items-center gap-2 pb-7 pt-8\"><a href=\"/\"><div class=\"logo flex items-center gap-2\" :class=\"sidebarToggle ? &#39;hidden&#39; : &#39;&#39;\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-brand-600\"></i> <span class=\"text-xl font-medium dark:text-white/90\">Chatpilot</span></div><span class=\"logo-icon\" :class=\"sidebarToggle ? &#39;lg:block&#39; : &#39;hidden&#39;\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-brand-600\"></i></span></a></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
