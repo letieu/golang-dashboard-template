@@ -65,7 +65,7 @@ func groupDivider(title string) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/sidebar.templ`, Line: 23, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/sidebar.templ`, Line: 21, Col: 11}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -116,7 +116,7 @@ func sidebarItem(link string, icon string, title string) templ.Component {
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(icon)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/sidebar.templ`, Line: 47, Col: 56}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/sidebar.templ`, Line: 35, Col: 57}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -129,7 +129,7 @@ func sidebarItem(link string, icon string, title string) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/sidebar.templ`, Line: 49, Col: 11}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/components/sidebar.templ`, Line: 37, Col: 13}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -164,7 +164,7 @@ func Sidebar() templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<aside :class=\"sidebarToggle ? &#39;translate-x-0 lg:w-[90px]&#39; : &#39;-translate-x-full&#39;\" class=\"sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 duration-300 ease-linear dark:border-gray-800 dark:bg-black lg:static lg:translate-x-0\" @click.outside=\"sidebarToggle = false\"><!-- SIDEBAR HEADER -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<aside x-init=\"\n         sidebarToggle = JSON.parse(localStorage.getItem(&#39;sidebarToggle&#39;));\n         $watch(&#39;sidebarToggle&#39;, value =&gt; localStorage.setItem(&#39;sidebarToggle&#39;, JSON.stringify(value)))\" :class=\"sidebarToggle ? &#39;translate-x-0 lg:w-[90px]&#39; : &#39;-translate-x-full&#39;\" class=\"sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 duration-300 ease-linear dark:border-gray-800 dark:bg-black lg:static lg:translate-x-0\"><!-- SIDEBAR HEADER -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -212,7 +212,7 @@ func Sidebar() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</ul></div><!-- Chat group --></nav><!-- Sidebar Menu --></div></aside><script>\n    const currentPage = window.location.pathname;\n    const menuItems = document.querySelectorAll('.menu-item');\n\n    menuItems.forEach(item => {\n      const itemLink = item.getAttribute('href');\n      if (itemLink === currentPage) {\n        item.classList.add('menu-item-active');\n        item.classList.remove('menu-item-inactive');\n      } else {\n        item.classList.add('menu-item-inactive');\n        item.classList.remove('menu-item-active');\n      }\n    });\n  </script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</ul></div><!-- Chat group --></nav><!-- Sidebar Menu --></div></aside><script>\n  const currentPage = window.location.pathname;\n  const menuItems = document.querySelectorAll('.menu-item');\n\n  menuItems.forEach(item => {\n    const itemLink = item.getAttribute('href');\n    if (itemLink === currentPage) {\n      item.classList.add('menu-item-active');\n      item.classList.remove('menu-item-inactive');\n    } else {\n      item.classList.add('menu-item-inactive');\n      item.classList.remove('menu-item-active');\n    }\n  });\n</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
