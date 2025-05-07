@@ -8,9 +8,9 @@ package layouts
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "chatpilot/app/views/components"
+import "chatpilot/app/web/templates/components"
 
-func Layout(content templ.Component, pageTitle string) templ.Component {
+func Layout(pageTitle string, content templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -39,7 +39,7 @@ func Layout(content templ.Component, pageTitle string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body x-data=\"{ page: &#39;ecommerce&#39;, &#39;loaded&#39;: true, &#39;darkMode&#39;: false, &#39;stickyMenu&#39;: false, &#39;sidebarToggle&#39;: false, &#39;scrollTop&#39;: false }\" x-init=\"\n         darkMode = JSON.parse(localStorage.getItem(&#39;darkMode&#39;));\n         $watch(&#39;darkMode&#39;, value =&gt; localStorage.setItem(&#39;darkMode&#39;, JSON.stringify(value)))\" :class=\"{&#39;dark bg-gray-900&#39;: darkMode === true}\"><!-- ===== Page Wrapper Start ===== --><div class=\"flex h-screen overflow-hidden\"><!-- ===== Sidebar Start ===== -->")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body x-data=\"{ &#39;darkMode&#39;: false, &#39;stickyMenu&#39;: false, &#39;sidebarToggle&#39;: false, &#39;scrollTop&#39;: false }\" x-init=\"\n         darkMode = JSON.parse(localStorage.getItem(&#39;darkMode&#39;));\n         $watch(&#39;darkMode&#39;, value =&gt; localStorage.setItem(&#39;darkMode&#39;, JSON.stringify(value)))\" :class=\"{&#39;dark bg-gray-900&#39;: darkMode === true}\"><!-- ===== Page Wrapper Start ===== --><div class=\"flex h-screen overflow-hidden\"><!-- ===== Sidebar Start ===== -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -62,7 +62,7 @@ func Layout(content templ.Component, pageTitle string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(pageTitle)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/layouts/layout.templ`, Line: 30, Col: 90}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/layouts/layout.templ`, Line: 30, Col: 90}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {

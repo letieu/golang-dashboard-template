@@ -1,14 +1,14 @@
 package layouts
 
-import "chatpilot/app/views/components"
+import "chatpilot/app/web/templates/components"
 
-templ Layout(content templ.Component, pageTitle string) {
+templ Layout(pageTitle string, content templ.Component) {
 <!DOCTYPE html>
 <html lang="en">
 @components.Head()
 
 <body
-  x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+  x-data="{ 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
   x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"

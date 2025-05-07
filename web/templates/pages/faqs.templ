@@ -1,0 +1,11 @@
+package pages
+
+import "chatpilot/app/web/templates/layouts"
+
+templ faqsContent() {
+	<div>FAQ list</div>
+}
+
+templ FaqsPage() {
+	@layouts.Layout("FAQs", faqsContent())
+}
