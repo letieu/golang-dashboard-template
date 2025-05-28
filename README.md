@@ -9,10 +9,10 @@ Starter point for build a fullstack dashboard app use:
 ## Run
 ```sh
 # run
-templ generate -watch -cmd "go run main.go"
+templ generate -watch -cmd "go run cmd/web/main.go"
 
 # compile tailwindcss
-tailwindcss -i views/styles/input.css -o static/main.css -w
+tailwindcss -i web/styles/input.css -o web/static/main.css -w
 ```
 
 ## Full HTML component example
