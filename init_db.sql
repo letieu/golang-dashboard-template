@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS tenant (
 
 CREATE TABLE IF NOT EXISTS user (
   username TEXT,
-  email TEXT
+  email TEXT NOT NULL UNIQUE
 )
 
 CREATE TABLE IF NOT EXISTS agent (
@@ -31,3 +31,9 @@ CREATE TABLE IF NOT EXISTS tenant_user (
   FOREIGN KEY (tenant_id) REFERENCES tenant(cid)
   FOREIGN KEY (user_id) REFERENCES user(cid)
 )
+
+CREATE TABLE IF NOT EXISTS sessions (
+  token TEXT PRIMARY KEY,
+  user_email TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);

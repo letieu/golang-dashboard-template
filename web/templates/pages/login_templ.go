@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "chatpilot/app/web/templates/layouts"
 
-func indexContent() templ.Component {
+func loginContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,7 +31,7 @@ func indexContent() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<span class=\"text-sm text-gray-500 dark:text-gray-400\">Home page</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex flex-col justify-center items-center w-full h-screen dark:bg-gray-900 sm:p-0\"><a href=\"/\"><div class=\"logo flex items-center gap-2\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-brand-600\"></i> <span class=\"text-xl font-medium dark:text-white/90\">Chatpilot</span></div></a><div class=\"mt-8\"><script src=\"https://accounts.google.com/gsi/client\" async></script><div id=\"g_id_onload\" data-client_id=\"728451500588-g8fish10248i3qi8uub0eh9mp0uloqmt.apps.googleusercontent.com\" data-context=\"signin\" data-ux_mode=\"popup\" data-auto_prompt=\"false\" data-login_uri=\"http://localhost:8000/login-google-callback\"></div><div class=\"g_id_signin\" data-type=\"standard\" data-shape=\"pill\" data-theme=\"outline\" data-text=\"signin_with\" data-size=\"large\" data-logo_alignment=\"left\"></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -39,7 +39,7 @@ func indexContent() templ.Component {
 	})
 }
 
-func IndexPage() templ.Component {
+func LoginPage() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -60,7 +60,7 @@ func IndexPage() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = layouts.DashboardLayout("Home", indexContent()).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layouts.AuthLayout("Home", loginContent()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -9,6 +9,9 @@ import (
 func SetupRoutes(r *gin.Engine) {
 	r.Static("/static", "web/static")
 	r.GET("/", handlers.Index)
+	r.GET("/login", handlers.Login)
+	r.POST("/login-google-callback", handlers.LoginGoogleCallback)
+
 	r.GET("/prompt", handlers.Prompt)
 	r.GET("/faqs", handlers.Faqs)
 }
