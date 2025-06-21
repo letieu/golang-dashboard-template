@@ -168,10 +168,10 @@ templ Navbar(user middlewares.CurrentUser) {
 					>
 						<div>
 							<span class="text-theme-sm block font-medium text-gray-700 dark:text-gray-400">
-								Musharof Chowdhury
+								{ user.Username }
 							</span>
 							<span class="text-theme-xs mt-0.5 block text-gray-500 dark:text-gray-400">
-								randomuser@pimjo.com
+								{ user.Email }
 							</span>
 						</div>
 						<ul class="flex flex-col gap-1 border-b border-gray-200 pt-4 pb-3 dark:border-gray-800">
@@ -245,7 +245,8 @@ templ Navbar(user middlewares.CurrentUser) {
 								</a>
 							</li>
 						</ul>
-						<button
+						<a
+							href="/logout"
 							class="group text-theme-sm mt-3 flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
 						>
 							<svg
@@ -264,7 +265,7 @@ templ Navbar(user middlewares.CurrentUser) {
 								></path>
 							</svg>
 							Sign out
-						</button>
+						</a>
 					</div>
 					<!-- Dropdown End -->
 				</div>

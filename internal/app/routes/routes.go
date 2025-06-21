@@ -11,6 +11,7 @@ func SetupRoutes(r *gin.Engine) {
 	r.Static("/static", "web/static")
 
 	r.GET("/login", handlers.Login)
+	r.GET("/logout", handlers.Logout)
 	r.POST("/login-google-callback", handlers.LoginGoogleCallback)
 
 	authGroup := r.Group("/")

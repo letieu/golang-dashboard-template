@@ -8,6 +8,5 @@ import (
 )
 
 func Index(c *gin.Context) {
-	c.Status(200)
 	utils.RenderDashboardPage(pages.IndexPage(), "Home page", c)
 }

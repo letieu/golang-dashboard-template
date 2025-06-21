@@ -16,8 +16,20 @@ import (
 const sessionDuration = time.Hour * 24 * 30 // 30 days
 
 func Login(c *gin.Context) {
-	c.Status(200)
 	pages.LoginPage().Render(c.Request.Context(), c.Writer)
+}
+
+func Logout(c *gin.Context) {
+	token, err := c.Cookie("session_token")
+	if err != nil || token == "" {
+		c.Redirect(http.StatusMovedPermanently, "/login")
+		return
+	}
+	db.DbPool.ExecContext(c, `
+		DELETE FROM session WHERE token = ? 
+	`, token)
+	c.SetCookie("session_token", "", -1, "/", "", false, true)
+	c.Redirect(http.StatusMovedPermanently, "/login")
 }
 
 func LoginGoogleCallback(c *gin.Context) {

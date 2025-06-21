@@ -38,14 +38,14 @@ func AuthMiddleware() gin.HandlerFunc {
 		token, err := c.Cookie("session_token")
 		if err != nil || token == "" {
 			c.Redirect(http.StatusMovedPermanently, "/login")
-			return
+			c.Abort()
 		}
 
 		user, err := validateToken(token)
 		if err != nil {
 			fmt.Printf("Error %v \n", err)
 			c.Redirect(http.StatusMovedPermanently, "/login")
-			return
+			c.Abort()
 		}
 
 		c.Set("currentUser", user)
