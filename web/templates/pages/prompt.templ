@@ -1,7 +1,5 @@
 package pages
 
-import "chatpilot/app/web/templates/layouts"
-
 var promptExample = `You are sales assistant. Your job is to help customers find the right product for their needs. You
 should ask questions
 to understand their requirements and provide them with the best options available. You should also be polite and
@@ -35,5 +33,5 @@ templ promptContent() {
 }
 
 templ PromptPage() {
-@layouts.DashboardLayout("Prompt", promptContent())
+promptContent()
 }

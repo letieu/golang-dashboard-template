@@ -1,44 +1,46 @@
 package layouts
 
 import "chatpilot/app/web/templates/components"
+import "chatpilot/app/internal/app/middlewares"
 
-templ DashboardLayout(pageTitle string, content templ.Component) {
-<!DOCTYPE html>
-<html lang="en">
-@components.Head()
-
-<body x-data="{ 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="
+templ DashboardLayout(pageTitle string, user middlewares.CurrentUser, content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="en">
+		@components.Head()
+		<body
+			x-data="{ 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+			x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-  :class="{'dark bg-gray-900': darkMode === true}">
-  <!-- ===== Page Wrapper Start ===== -->
-  <div class="flex h-screen overflow-hidden">
-    <!-- ===== Sidebar Start ===== -->
-    @components.Sidebar()
-    <!-- ===== Sidebar End ===== -->
-    <!-- ===== Content Area Start ===== -->
-    <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-      <!-- ===== Navbar Start ===== -->
-      @components.Navbar()
-      <!-- ===== Navbar End ===== -->
-      <!-- ===== Main Content Start ===== -->
-      <main>
-        <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-          <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{ pageTitle }</h2>
-          </div>
-          @content
-        </div>
-      </main>
-      <!-- ===== Main Content End ===== -->
-    </div>
-    <!-- ===== Content Area End ===== -->
-  </div>
-  <!-- ===== Page Wrapper End ===== -->
-  <script>
+			:class="{'dark bg-gray-900': darkMode === true}"
+		>
+			<!-- ===== Page Wrapper Start ===== -->
+			<div class="flex h-screen overflow-hidden">
+				<!-- ===== Sidebar Start ===== -->
+				@components.Sidebar()
+				<!-- ===== Sidebar End ===== -->
+				<!-- ===== Content Area Start ===== -->
+				<div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+					<!-- ===== Navbar Start ===== -->
+					@components.Navbar(user)
+					<!-- ===== Navbar End ===== -->
+					<!-- ===== Main Content Start ===== -->
+					<main>
+						<div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+							<div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+								<h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">{ pageTitle }</h2>
+							</div>
+							@content
+						</div>
+					</main>
+					<!-- ===== Main Content End ===== -->
+				</div>
+				<!-- ===== Content Area End ===== -->
+			</div>
+			<!-- ===== Page Wrapper End ===== -->
+			<script>
     lucide.createIcons();
   </script>
-</body>
-
-</html>
+		</body>
+	</html>
 }

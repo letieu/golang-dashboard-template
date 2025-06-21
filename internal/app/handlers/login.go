@@ -7,10 +7,13 @@ import (
 	"encoding/hex"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"google.golang.org/api/idtoken"
 )
+
+const sessionDuration = time.Hour * 24 * 30 // 30 days
 
 func Login(c *gin.Context) {
 	c.Status(200)
@@ -70,19 +73,22 @@ func LoginGoogleCallback(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error when create new session token"})
 		return
 	}
+
+	expireAt := time.Now().Add(sessionDuration)
 	_, err = db.DbPool.Exec(`
-		INSERT INTO sessions (token, user_email) VALUES (?, ?)
-	`, sessionToken, email)
+		INSERT INTO session (token, user_email, expire_at) VALUES (?, ?, ?)
+	`, sessionToken, email, expireAt)
 	if err != nil {
-		fmt.Println("%v", err)
+		fmt.Printf("%v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 
-	c.SetCookie("session_token", sessionToken, 3600*24*7, "/", "", false, true)
+	maxAge := int(time.Until(expireAt).Seconds())
+	c.SetCookie("session_token", sessionToken, maxAge, "/", "", false, true)
 
 	// set cookie
-	c.Redirect(301, "/")
+	c.Redirect(http.StatusMovedPermanently, "/")
 }
 
 func generateSessionToken() (string, error) {
