@@ -12,6 +12,8 @@ import (
 )
 
 func main() {
+	fmt.Println("Starting server...")
+
 	var err error
 	db.DbPool, err = sql.Open("sqlite3", "saleAI.db")
 	if err != nil {
@@ -25,7 +27,7 @@ func main() {
 
 	fmt.Println("SQLite DB connected successfully.")
 
-	fmt.Println("Starting server...")
+	fmt.Println("Setting routes...")
 
 	r := gin.Default()
 	routes.SetupRoutes(r)
