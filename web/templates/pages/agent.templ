@@ -34,11 +34,14 @@ templ AgentPage(selectedId int64, agents []db.Agent, currentUser middlewares.Cur
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 				<!-- Bot Overview Card -->
 				@Card(1, "Overview") {
-					@part.BotOverview()
-					<button class="mt-6 w-full btn-primary">
-						<i data-lucide="square-pen" class=""></i>
-						Edit Details
-					</button>
+					<div
+						class="flex items-center justify-center"
+						hx-get={ "/parts/agent/overview/" + strconv.Itoa(int(selectedId)) }
+						hx-trigger="load"
+						hx-swap="outerHTML"
+					>
+						<div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gradient-to-r from-blue-500 to-purple-600"></div>
+					</div>
 				}
 				<!-- Train Bot Card -->
 				<div class="group">
@@ -68,16 +71,19 @@ templ AgentInfo(agents []db.Agent, selectedId int64) {
 		</div>
 		<div>
 			<div class="flex gap-4 items-center">
-				<select name="agent" class="bg-rose-pine-base text-xl font-bold text-rose-pine-text cursor-pointer p-2 rounded-md">
+				<select
+					name="agent"
+					class="bg-rose-pine-base text-xl font-bold text-rose-pine-text cursor-pointer p-2 rounded-md"
+					x-data
+					@change="window.location = $event.target.options[$event.target.selectedIndex].dataset.url"
+				>
 					for _, agent := range agents {
 						<option
-							value={ agent.Id }
-							selected={ agent.Id == selectedId }
 							class="text-black dark:text-white bg-rose-pine-base"
-							hx-get={ "/?agent=" + strconv.Itoa(int(agent.Id)) }
-							hx-target="html"
-							hx-swap="outerHTML"
-							hx-push-url="true"
+							data-url={ "/?agent=" + strconv.Itoa(int(agent.Id)) }
+							if agent.Id == selectedId {
+								selected
+							}
 						>
 							{ agent.Name }
 						</option>
@@ -94,7 +100,7 @@ templ AgentInfo(agents []db.Agent, selectedId int64) {
 					<div class="w-2 h-2 bg-rose-pine-foam rounded-full animate-pulse"></div>
 					<span class="text-rose-pine-foam font-medium">Active</span>
 				</div>
-				<div class="w-px h-4 bg-rose-pine-highlight-med/30"></div>
+				<div class="w-px h-4 bg-rose-pine-highlight-med"></div>
 				<span>Platforms: Facebook, Instagram</span>
 			</div>
 		</div>

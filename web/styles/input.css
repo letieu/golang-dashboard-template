@@ -37,7 +37,6 @@ html {
 .btn-primary {
   @apply cursor-pointer;
   @apply px-4 py-3 rounded-lg font-medium transition-all duration-300;
-  @apply flex items-center justify-center gap-2;
 
   @apply bg-gradient-to-r from-rose-pine-rose/20 to-rose-pine-love/20;
   @apply hover:from-rose-pine-rose/30 hover:to-rose-pine-love/30;
@@ -48,7 +47,6 @@ html {
 .btn-secondary {
   @apply cursor-pointer;
   @apply px-4 py-3 rounded-lg font-medium transition-all duration-300;
-  @apply flex items-center justify-center gap-2;
 
   @apply bg-gradient-to-r from-rose-pine-foam/20 to-rose-pine-pine/20;
   @apply hover:from-rose-pine-foam/30 hover:to-rose-pine-pine/30;
@@ -59,7 +57,6 @@ html {
 .btn-accent {
   @apply cursor-pointer;
   @apply px-4 py-3 rounded-lg font-medium transition-all duration-300;
-  @apply flex items-center justify-center gap-2;
 
   @apply bg-gradient-to-r from-rose-pine-gold/20 to-rose-pine-gold/10;
   @apply hover:from-rose-pine-gold/30 hover:to-rose-pine-gold/20;
@@ -70,7 +67,6 @@ html {
 .btn-small {
   @apply cursor-pointer;
   @apply px-4 py-3 rounded-lg font-medium transition-all duration-300;
-  @apply flex items-center justify-center gap-2;
   @apply px-3 py-2 text-sm;
 }
 

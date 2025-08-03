@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"chatpilot/app/web/templates/parts"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,6 +27,29 @@ func CreateNewAgent(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusMovedPermanently, "/?agent="+strconv.Itoa(int(newId)))
+}
+
+// /parts/agent/overview/123
+func GetOverviewPart(c *gin.Context) {
+	currentUser := utils.GetCurrentUser(c)
+	agentIdStr, ok := c.Params.Get("agentId")
+	if ok == false {
+		parts.ErrorInfo("Do not have agentId").Render(c.Request.Context(), c.Writer)
+		return
+	}
+	agentId, err := strconv.Atoi(agentIdStr)
+	if err != nil {
+		parts.ErrorInfo("Invalid agentId").Render(c.Request.Context(), c.Writer)
+		return
+	}
+
+	agent, err := db.GetAgentById(agentId, int(currentUser.Id), c.Request.Context())
+	if err != nil {
+		parts.ErrorInfo(err.Error()).Render(c.Request.Context(), c.Writer)
+		return
+	}
+
+	parts.AgentOverview(agent).Render(c, c.Writer)
 }
 
 func generateMilitaryAgent() string {

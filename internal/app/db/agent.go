@@ -35,6 +35,22 @@ func GetAgentsByUserId(userId int64, ctx context.Context) ([]Agent, error) {
 	return agents, nil
 }
 
+func GetAgentById(id int, userId int, ctx context.Context) (Agent, error) {
+	row := DbPool.QueryRowContext(ctx,
+		`SELECT id, name, industry, personality FROM agent ag
+		LEFT JOIN agent_user au ON au.agent_id = ag.id
+		WHERE ag.id = ? and au.user_id = ?`,
+		id, userId)
+
+	var agent Agent
+	err := row.Scan(&agent.Id, &agent.Name, &agent.Industry, &agent.Personality)
+	if err != nil {
+		return Agent{}, err
+	}
+
+	return agent, err
+}
+
 type CreateAgentInput struct {
 	Name        string
 	Industry    string

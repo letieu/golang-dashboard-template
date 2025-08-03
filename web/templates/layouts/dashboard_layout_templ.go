@@ -48,7 +48,7 @@ func DashboardLayout(pageTitle string, user middlewares.CurrentUser, content tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<!-- ===== Page Wrapper End ===== --><script>\n    lucide.createIcons();\n  </script></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<!-- ===== Page Wrapper End ===== --><script>\n    lucide.createIcons();\n\n    document.body.addEventListener(\"htmx:afterSwap\", function (event) {\n        if (event?.detail?.target) {\n            lucide.createIcons();\n        }\n    });\n  </script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

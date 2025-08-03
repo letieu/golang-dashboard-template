@@ -1,0 +1,120 @@
+package parts
+
+import "chatpilot/app/internal/app/db"
+import "strconv"
+
+templ AgentOverview(agent db.Agent) {
+	<form
+		hx-post={ "/parts/agent/overview/" + strconv.Itoa(int(agent.Id)) }
+		hx-method="GET"
+		hx-swap="outerHTML"
+		class="space-y-4"
+		data-editing="false"
+		id="agent-form"
+	>
+		<!-- Name -->
+		<div class="list-item">
+			<i data-lucide="bot-message-square" class="w-6 h-6 text-rose-pine-foam"></i>
+			<div class="flex justify-between w-full">
+				<label class="text-sm text-rose-pine-subtle">Name</label>
+				<input
+					name="name"
+					value={ agent.Name }
+					class="font-medium text-rose-pine-text bg-transparent text-right"
+					disabled
+				/>
+			</div>
+		</div>
+		<!-- Industry -->
+		<div class="list-item">
+			<i data-lucide="crosshair" class="w-6 h-6 text-rose-pine-foam"></i>
+			<div class="flex justify-between w-full">
+				<label class="text-sm text-rose-pine-subtle">Industry</label>
+				<input
+					name="industry"
+					value={ agent.Industry }
+					class="font-medium text-rose-pine-text bg-transparent text-right"
+					disabled
+				/>
+			</div>
+		</div>
+		<!-- Personality -->
+		<div class="list-item">
+			<i data-lucide="person-standing" class="w-6 h-6 text-rose-pine-foam"></i>
+			<div class="flex justify-between w-full">
+				<label class="text-sm text-rose-pine-subtle">Personality</label>
+				<input
+					name="personality"
+					value={ agent.Personality }
+					class="font-medium text-rose-pine-text bg-transparent text-right"
+					disabled
+				/>
+			</div>
+		</div>
+		<div class="list-item">
+			<i data-lucide="plug-zap" class="w-6 h-6 text-rose-pine-foam"></i>
+			<div class="flex justify-between w-full">
+				<label class="text-sm text-rose-pine-subtle">Connected</label>
+				<div
+					class="font-medium"
+				>
+					Facebook, Zalo
+				</div>
+			</div>
+		</div>
+		<!-- Action Buttons -->
+		<div class="pt-4 space-x-2">
+			<button
+				type="button"
+				onclick="toggleEdit(true)"
+				class="w-full btn-primary"
+				id="edit-btn"
+			>
+				<div class="flex item-centers gap-2 justify-center">
+					<i data-lucide="square-pen" class=""></i>
+					Edit Details
+				</div>
+			</button>
+			<div class="flex gap-2 justify-end">
+				<button
+					class="btn-primary hidden"
+					type="button"
+					onclick="toggleEdit(false)"
+					id="cancel-btn"
+				>
+					Cancel
+				</button>
+				<button
+					type="submit"
+					class="btn-secondary hidden"
+					id="save-btn"
+				>
+					Save
+				</button>
+			</div>
+		</div>
+	</form>
+	<script>
+		function toggleEdit(editing) {
+			const form = document.getElementById("agent-form");
+			form.dataset.editing = editing;
+
+			// toggle all inputs
+			form.querySelectorAll("input").forEach((input) => {
+				input.disabled = !editing;
+				input.classList.toggle("bg-transparent", !editing);
+				input.classList.toggle("bg-rose-pine-base", editing);
+			});
+
+			// toggle buttons
+			document.getElementById("edit-btn").classList.toggle("hidden", editing);
+			document.getElementById("save-btn").classList.toggle("hidden", !editing);
+			document.getElementById("cancel-btn").classList.toggle("hidden", !editing);
+
+			// optional: reset values on cancel
+			if (!editing) {
+				form.reset();
+			}
+		}
+	</script>
+}

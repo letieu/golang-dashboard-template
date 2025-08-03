@@ -13,6 +13,12 @@ templ DashboardLayout(pageTitle string, user middlewares.CurrentUser, content te
 			<!-- ===== Page Wrapper End ===== -->
 			<script>
     lucide.createIcons();
+
+    document.body.addEventListener("htmx:afterSwap", function (event) {
+        if (event?.detail?.target) {
+            lucide.createIcons();
+        }
+    });
   </script>
 		</body>
 	</html>
