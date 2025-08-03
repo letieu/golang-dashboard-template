@@ -5,7 +5,7 @@ import (
 )
 
 type Agent struct {
-	Id          uint
+	Id          int64
 	Name        string
 	Industry    string
 	Personality string

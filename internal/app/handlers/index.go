@@ -4,7 +4,9 @@ import (
 	"chatpilot/app/internal/app/db"
 	"chatpilot/app/internal/app/utils"
 	"chatpilot/app/web/templates/pages"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,10 +24,19 @@ func Index(c *gin.Context) {
 		utils.RenderDashboardPage(pages.NoAgentPage(currentUser), "Agent overview", c)
 		return
 	}
+	var selectedId = userAgents[len(userAgents)-1].Id
+	queryId, ok := c.GetQuery("agent")
+	if ok == true {
+		selectedId, err = strconv.ParseInt(queryId, 10, 64)
+		if err != nil {
+			log.Printf("%v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
 
-	var selectedIndex uint = 0
 	utils.RenderDashboardPage(pages.AgentPage(
-		selectedIndex,
+		selectedId,
 		userAgents,
 		currentUser,
 	), "Agent overview", c)

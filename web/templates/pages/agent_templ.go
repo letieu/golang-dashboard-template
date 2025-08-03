@@ -8,11 +8,14 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "chatpilot/app/web/templates/pages/part"
-import "chatpilot/app/internal/app/middlewares"
-import "chatpilot/app/internal/app/db"
+import (
+	"chatpilot/app/internal/app/db"
+	"chatpilot/app/internal/app/middlewares"
+	"chatpilot/app/web/templates/pages/part"
+	"strconv"
+)
 
-func AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.CurrentUser) templ.Component {
+func AgentPage(selectedId int64, agents []db.Agent, currentUser middlewares.CurrentUser) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -43,7 +46,7 @@ func AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.Cu
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = AgentInfo().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = AgentInfo(agents, selectedId).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -54,7 +57,7 @@ func AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.Cu
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(currentUser.Username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/pages/agent.templ`, Line: 21, Col: 113}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/pages/agent.templ`, Line: 24, Col: 113}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -106,7 +109,7 @@ func AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.Cu
 	})
 }
 
-func AgentInfo() templ.Component {
+func AgentInfo(agents []db.Agent, selectedId int64) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -127,7 +130,69 @@ func AgentInfo() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div class=\"flex items-center gap-4\"><div class=\"w-12 h-12 bg-gradient-to-br from-rose-pine-rose to-rose-pine-love rounded-full flex items-center justify-center shadow-lg\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-rose-pine-pine\"></i></div><div><h2 class=\"text-xl font-bold text-rose-pine-text\">My Agent 1</h2><div class=\"flex items-center gap-4 mt-2 text-sm text-rose-pine-subtle\"><div class=\"flex items-center gap-2\"><div class=\"w-2 h-2 bg-rose-pine-foam rounded-full animate-pulse\"></div><span class=\"text-rose-pine-foam font-medium\">Active</span></div><div class=\"w-px h-4 bg-rose-pine-highlight-med/30\"></div><span>Platforms: Facebook, Instagram</span></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div class=\"flex items-center gap-4\"><div class=\"w-12 h-12 bg-gradient-to-br from-rose-pine-rose to-rose-pine-love rounded-full flex items-center justify-center shadow-lg\"><i data-lucide=\"bot-message-square\" class=\"w-[32px] h-[32px] text-rose-pine-pine\"></i></div><div><div class=\"flex gap-4 items-center\"><select name=\"agent\" class=\"bg-rose-pine-base text-xl font-bold text-rose-pine-text cursor-pointer p-2 rounded-md\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, agent := range agents {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<option value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(agent.Id)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/pages/agent.templ`, Line: 74, Col: 23}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\" selected=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var6 string
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(agent.Id == selectedId)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/pages/agent.templ`, Line: 75, Col: 40}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\" class=\"text-black dark:text-white bg-rose-pine-base\" hx-get=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("/?agent=" + strconv.Itoa(int(agent.Id)))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/pages/agent.templ`, Line: 77, Col: 56}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "\" hx-target=\"html\" hx-swap=\"outerHTML\" hx-push-url=\"true\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(agent.Name)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/pages/agent.templ`, Line: 82, Col: 19}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</option>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</select><form action=\"/agent\" method=\"POST\"><button type=\"submit\" class=\"cursor-pointer\"><i data-lucide=\"plus\"></i></button></form></div><div class=\"flex items-center gap-4 mt-2 text-sm text-rose-pine-subtle\"><div class=\"flex items-center gap-2\"><div class=\"w-2 h-2 bg-rose-pine-foam rounded-full animate-pulse\"></div><span class=\"text-rose-pine-foam font-medium\">Active</span></div><div class=\"w-px h-4 bg-rose-pine-highlight-med/30\"></div><span>Platforms: Facebook, Instagram</span></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -151,20 +216,20 @@ func Card(index uint, title string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var5 == nil {
-			templ_7745c5c3_Var5 = templ.NopComponent
+		templ_7745c5c3_Var9 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var9 == nil {
+			templ_7745c5c3_Var9 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div class=\"group\"><div class=\"card-primary\"><div class=\"section-header\"><div class=\"section-number section-number-1\">1</div><h3 class=\"section-title\">Agent Overview</h3></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<div class=\"group\"><div class=\"card-primary\"><div class=\"section-header\"><div class=\"section-number section-number-1\">1</div><h3 class=\"section-title\">Agent Overview</h3></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ_7745c5c3_Var5.Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templ_7745c5c3_Var9.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

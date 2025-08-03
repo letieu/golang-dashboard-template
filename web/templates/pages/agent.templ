@@ -1,10 +1,13 @@
 package pages
 
-import "chatpilot/app/web/templates/pages/part"
-import "chatpilot/app/internal/app/middlewares"
-import "chatpilot/app/internal/app/db"
+import (
+	"chatpilot/app/internal/app/db"
+	"chatpilot/app/internal/app/middlewares"
+	"chatpilot/app/web/templates/pages/part"
+	"strconv"
+)
 
-templ AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.CurrentUser) {
+templ AgentPage(selectedId int64, agents []db.Agent, currentUser middlewares.CurrentUser) {
 	if len(agents) == 0 {
 		return
 	}
@@ -14,7 +17,7 @@ templ AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.C
 			<header class="mb-8">
 				<div class="card-primary">
 					<div class="flex items-center justify-between">
-						@AgentInfo()
+						@AgentInfo(agents, selectedId)
 						<div class="hidden md:flex items-center gap-3">
 							<div class="text-right">
 								<div x-data="{ open: false }">
@@ -58,15 +61,34 @@ templ AgentPage(selectedIndex uint, agents []db.Agent, currentUser middlewares.C
 	</div>
 }
 
-templ AgentInfo() {
+templ AgentInfo(agents []db.Agent, selectedId int64) {
 	<div class="flex items-center gap-4">
 		<div class="w-12 h-12 bg-gradient-to-br from-rose-pine-rose to-rose-pine-love rounded-full flex items-center justify-center shadow-lg">
 			<i data-lucide="bot-message-square" class="w-[32px] h-[32px] text-rose-pine-pine"></i>
 		</div>
 		<div>
-			<h2 class="text-xl font-bold text-rose-pine-text">
-				My Agent 1
-			</h2>
+			<div class="flex gap-4 items-center">
+				<select name="agent" class="bg-rose-pine-base text-xl font-bold text-rose-pine-text cursor-pointer p-2 rounded-md">
+					for _, agent := range agents {
+						<option
+							value={ agent.Id }
+							selected={ agent.Id == selectedId }
+							class="text-black dark:text-white bg-rose-pine-base"
+							hx-get={ "/?agent=" + strconv.Itoa(int(agent.Id)) }
+							hx-target="html"
+							hx-swap="outerHTML"
+							hx-push-url="true"
+						>
+							{ agent.Name }
+						</option>
+					}
+				</select>
+				<form action="/agent" method="POST">
+					<button type="submit" class="cursor-pointer">
+						<i data-lucide="plus"></i>
+					</button>
+				</form>
+			</div>
 			<div class="flex items-center gap-4 mt-2 text-sm text-rose-pine-subtle">
 				<div class="flex items-center gap-2">
 					<div class="w-2 h-2 bg-rose-pine-foam rounded-full animate-pulse"></div>
