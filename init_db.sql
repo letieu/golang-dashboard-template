@@ -1,40 +1,37 @@
--- Init DB
-CREATE TABLE IF NOT EXISTS tenant (
-  name TEXT
-)
-
 CREATE TABLE IF NOT EXISTS user (
-  username TEXT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
   email TEXT NOT NULL UNIQUE
-)
+);
 
 CREATE TABLE IF NOT EXISTS agent (
-  tenant_id INTEGER,
-  name TEXT,
-  prompt TEXT,
-  FOREIGN KEY (tenant_id) REFERENCES tenant(cid)
-)
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  industry TEXT,
+  personality TEXT
+);
 
 CREATE TABLE IF NOT EXISTS faq (
-  tenant_id INTEGER,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   question TEXT,
   answer TEXT,
   priority INTEGER,
-  FOREIGN KEY (tenant_id) REFERENCES tenant(cid)
-)
+  agent_id INTEGER,
+  FOREIGN KEY (agent_id) REFERENCES agent(id)
+);
 
-
-CREATE TABLE IF NOT EXISTS tenant_user (
-  tenant_id INTEGER,
+CREATE TABLE IF NOT EXISTS agent_user (
+  agent_id INTEGER,
   user_id INTEGER,
   role TEXT,
-  FOREIGN KEY (tenant_id) REFERENCES tenant(cid)
-  FOREIGN KEY (user_id) REFERENCES user(cid)
-)
+  FOREIGN KEY (agent_id) REFERENCES agent(id)
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
 
 CREATE TABLE IF NOT EXISTS session (
   token TEXT PRIMARY KEY,
-  user_email TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   expire_at DATETIME
 );
+

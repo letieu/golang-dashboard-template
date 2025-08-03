@@ -1,0 +1,58 @@
+package part
+
+templ ChatSimulate() {
+	<div class="card-primary">
+		<div class="section-header">
+			<div class="section-number section-number-3">3</div>
+			<h3 class="section-title">Chat Simulation & Testing</h3>
+		</div>
+		<div class="bg-rose-pine-overlay/30 rounded-lg p-4 mb-6">
+			<div class="space-y-4">
+				<div class="flex gap-3">
+					<div class="chat-avatar chat-avatar-user">
+						<svg class="w-4 h-4 text-rose-pine-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+						</svg>
+					</div>
+					<div class="flex-1">
+						<div class="chat-bubble-user">
+							<span class="text-rose-pine-text">"Do you have size M in red?"</span>
+						</div>
+					</div>
+				</div>
+				<div class="flex gap-3">
+					<div class="chat-avatar chat-avatar-bot">
+						<svg class="w-4 h-4 text-rose-pine-foam" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+						</svg>
+					</div>
+					<div class="flex-1">
+						<div class="chat-bubble-bot">
+							<span class="text-rose-pine-text">"Yes, red shirts in size M are available! Would you like me to show you our current collection?"</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="flex flex-wrap gap-3">
+			<button class="btn-accent btn-small">
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+				</svg>
+				Improve Response
+			</button>
+			<button class="btn-secondary btn-small">
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+				</svg>
+				Good Response
+			</button>
+			<button class="bg-gradient-to-r from-rose-pine-love/20 to-rose-pine-love/10 hover:from-rose-pine-love/30 hover:to-rose-pine-love/20 border border-rose-pine-love/30 text-rose-pine-love btn-base btn-small hover:shadow-lg hover:shadow-rose-pine-love/10">
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.7m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"></path>
+				</svg>
+				Poor Response
+			</button>
+		</div>
+	</div>
+}

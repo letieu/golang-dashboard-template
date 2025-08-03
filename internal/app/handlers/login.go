@@ -3,10 +3,10 @@ package handlers
 import (
 	"chatpilot/app/internal/app/db"
 	"chatpilot/app/web/templates/pages"
-	"context"
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -53,13 +53,13 @@ func LoginGoogleCallback(c *gin.Context) {
 		return
 	}
 
-	_, err = findOrCreateUser(email, username, c)
+	userId, err := findOrCreateUser(email, username, c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := initSession(email, c); err != nil {
+	if err := initSession(userId, c); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -73,35 +73,6 @@ func generateSessionToken() (string, error) {
 		return "", err
 	}
 	return hex.EncodeToString(bytes), nil
-}
-
-func generateAgent(userId uint, ctx context.Context) error {
-	tenantIds, err := db.GetUserTenantIds(userId, ctx)
-	if err != nil {
-		return err
-	}
-
-	var tenantId uint
-	if len(tenantIds) == 0 {
-		tenantId, err = db.CreateDefaultTenantForUser(userId, ctx)
-		if err != nil {
-			return err
-		}
-	} else {
-		tenantId = tenantIds[0]
-	}
-
-	agentIds, err := db.GetAgentIdsByTenantId(tenantId, ctx)
-	if err != nil {
-		return err
-	}
-	if len(agentIds) == 0 {
-		if err := db.CreateDefaultAgentForTenant(tenantId, ctx); err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
 
 func verifyCSRF(c *gin.Context) error {
@@ -139,15 +110,14 @@ func extractUserInfo(payload *idtoken.Payload) (username, email string, err erro
 	return rawUsername, rawEmail, nil
 }
 
-func findOrCreateUser(email, username string, c *gin.Context) (uint, error) {
+func findOrCreateUser(email, username string, c *gin.Context) (int64, error) {
 	userId, err := db.GetUserIdByEmail(email, c)
 	if err == nil {
 		return userId, nil
 	}
 
-	// Create new user
 	if err := db.UpsertUser(email, username, c); err != nil {
-		return 0, fmt.Errorf("failed to create user")
+		return 0, fmt.Errorf("failed to create user %v", err)
 	}
 
 	userId, err = db.GetUserIdByEmail(email, c)
@@ -155,22 +125,32 @@ func findOrCreateUser(email, username string, c *gin.Context) (uint, error) {
 		return 0, fmt.Errorf("failed to retrieve user after creation")
 	}
 
-	// Create tenant + agent
-	if err := generateAgent(userId, c); err != nil {
-		return 0, fmt.Errorf("failed to create default agent for user")
+	// create default agent
+	agents, err := db.GetAgentsByUserId(userId, c)
+	log.Printf("hiih %v", agents)
+	if len(agents) == 0 {
+		_, err := db.CreateAgent(db.CreateAgentInput{
+			Name:        "Agent 1",
+			UserId:      userId,
+			Industry:    "",
+			Personality: "",
+		}, c)
+		if err != nil {
+			return 0, fmt.Errorf("failed to retrieve user after creation")
+		}
 	}
 
 	return userId, nil
 }
 
-func initSession(email string, c *gin.Context) error {
+func initSession(userId int64, c *gin.Context) error {
 	sessionToken, err := generateSessionToken()
 	if err != nil {
 		return fmt.Errorf("failed to generate session token")
 	}
 
 	expireAt := time.Now().Add(sessionDuration)
-	if err := db.SetSession(email, sessionToken, expireAt); err != nil {
+	if err := db.SetSession(userId, sessionToken, expireAt); err != nil {
 		return fmt.Errorf("failed to store session: %v", err)
 	}
 

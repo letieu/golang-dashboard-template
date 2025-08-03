@@ -1,0 +1,31 @@
+package pages
+
+import "chatpilot/app/internal/app/middlewares"
+
+templ NoAgentPage(currentUser middlewares.CurrentUser) {
+	<div class="min-h-screen">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+			<header class="mb-8">
+				<div class="card-primary">
+					<div class="flex items-center justify-between">
+						<div class="text-sm text-rose-pine-love cursor-pointer mr-2">{ currentUser.Username }</div>
+						<div class="cursor-pointer"><a href="/logout">Logout</a></div>
+					</div>
+				</div>
+			</header>
+			<div class="flex flex-col items-center justify-center space-y-6">
+				<div class="w-20 h-20 bg-gradient-to-br from-rose-pine-rose to-rose-pine-love rounded-full flex items-center justify-center shadow-lg">
+					<i data-lucide="bot-message-square" class="w-[32px] h-[32px] text-rose-pine-pine"></i>
+				</div>
+				<h2 class="text-2xl font-bold text-rose-pine-text">No Agents Found</h2>
+				<p class="text-rose-pine-subtle max-w-md">You haven’t created any agents yet. Start by creating your first AI agent to handle conversations across platforms like Facebook or Instagram.</p>
+				<form action="/agent" method="POST">
+					<button type="submit" class="btn-primary inline-flex items-center gap-2">
+						<i data-lucide="plus" class="w-[32px] h-[32px]"></i>
+						Create Agent
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+}

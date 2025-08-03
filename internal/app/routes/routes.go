@@ -18,5 +18,6 @@ func SetupRoutes(r *gin.Engine) {
 	authGroup.Use(middlewares.AuthMiddleware())
 	{
 		authGroup.GET("/", handlers.Index)
+		authGroup.POST("/agent", handlers.CreateNewAgent)
 	}
 }

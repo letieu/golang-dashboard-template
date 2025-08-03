@@ -9,9 +9,9 @@ import (
 )
 
 type CurrentUser struct {
+	Id       int64
 	Username string
 	Email    string
-	Id       uint
 }
 
 func validateToken(sessionToken string) (CurrentUser, error) {
@@ -19,9 +19,9 @@ func validateToken(sessionToken string) (CurrentUser, error) {
 
 	// TODO: handle expire
 	query := `
-        SELECT u.rowid, u.username, u.email
+        SELECT u.id, u.username, u.email
         FROM session s
-        JOIN user u ON s.user_email = u.email
+        JOIN user u ON s.user_id = u.id
         WHERE s.token = ?
     `
 	row := db.DbPool.QueryRow(query, sessionToken)
