@@ -18,7 +18,5 @@ func SetupRoutes(r *gin.Engine) {
 	authGroup.Use(middlewares.AuthMiddleware())
 	{
 		authGroup.GET("/", handlers.Index)
-		authGroup.GET("/prompt", handlers.Prompt)
-		authGroup.GET("/faqs", handlers.Faqs)
 	}
 }

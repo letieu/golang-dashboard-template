@@ -6,17 +6,9 @@ templ AuthLayout(pageTitle string, content templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		@components.Head()
-		<body
-			x-data="{ 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
-			x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
-         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-			:class="{'dark bg-gray-900': darkMode === true}"
-		>
+		<body class="bg-rose-pine-base text-rose-pine-text">
 			<!-- ===== Page Wrapper Start ===== -->
-			<div class="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
-				@content
-			</div>
+			@content
 			<!-- ===== Page Wrapper End ===== -->
 			<script>
     lucide.createIcons();

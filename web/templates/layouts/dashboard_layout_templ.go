@@ -8,8 +8,8 @@ package layouts
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "chatpilot/app/web/templates/components"
 import "chatpilot/app/internal/app/middlewares"
+import "chatpilot/app/web/templates/components"
 
 func DashboardLayout(pageTitle string, user middlewares.CurrentUser, content templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -40,36 +40,7 @@ func DashboardLayout(pageTitle string, user middlewares.CurrentUser, content tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body x-data=\"{ &#39;darkMode&#39;: false, &#39;stickyMenu&#39;: false, &#39;sidebarToggle&#39;: false, &#39;scrollTop&#39;: false }\" x-init=\"\n         darkMode = JSON.parse(localStorage.getItem(&#39;darkMode&#39;));\n         $watch(&#39;darkMode&#39;, value =&gt; localStorage.setItem(&#39;darkMode&#39;, JSON.stringify(value)))\" :class=\"{&#39;dark bg-gray-900&#39;: darkMode === true}\"><!-- ===== Page Wrapper Start ===== --><div class=\"flex h-screen overflow-hidden\"><!-- ===== Sidebar Start ===== -->")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.Sidebar().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<!-- ===== Sidebar End ===== --><!-- ===== Content Area Start ===== --><div class=\"relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto\"><!-- ===== Navbar Start ===== -->")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.Navbar(user).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<!-- ===== Navbar End ===== --><!-- ===== Main Content Start ===== --><main><div class=\"p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6\"><div class=\"mb-6 flex flex-wrap items-center justify-between gap-3\"><h2 class=\"text-xl font-semibold text-gray-800 dark:text-white/90\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(pageTitle)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/templates/layouts/dashboard_layout.templ`, Line: 31, Col: 86}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</h2></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"bg-rose-pine-base text-rose-pine-text\"><!-- ===== Page Wrapper Start ===== -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -77,7 +48,7 @@ func DashboardLayout(pageTitle string, user middlewares.CurrentUser, content tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div></main><!-- ===== Main Content End ===== --></div><!-- ===== Content Area End ===== --></div><!-- ===== Page Wrapper End ===== --><script>\n    lucide.createIcons();\n  </script></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<!-- ===== Page Wrapper End ===== --><script>\n    lucide.createIcons();\n  </script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
