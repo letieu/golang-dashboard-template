@@ -29,6 +29,51 @@ func CreateNewAgent(c *gin.Context) {
 	c.Redirect(http.StatusMovedPermanently, "/?agent="+strconv.Itoa(int(newId)))
 }
 
+func UpdateAgent(c *gin.Context) {
+	currentUser := utils.GetCurrentUser(c)
+
+	agentIdStr, ok := c.Params.Get("agentId")
+	if ok == false {
+		parts.ErrorInfo("Do not have agentId").Render(c.Request.Context(), c.Writer)
+		return
+	}
+	agentId, err := strconv.Atoi(agentIdStr)
+	if err != nil {
+		parts.ErrorInfo("Invalid agentId").Render(c.Request.Context(), c.Writer)
+		return
+	}
+
+	_, err = db.GetAgentUserMapping(int(currentUser.Id), agentId, c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	name := c.PostForm("name")
+	industry := c.PostForm("industry")
+	personality := c.PostForm("personality")
+
+	err = db.UpdateAgent(db.UpdateAgentInput{
+		Id:          agentId,
+		Name:        name,
+		Industry:    industry,
+		Personality: personality,
+	}, c)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	agent, err := db.GetAgentById(agentId, int(currentUser.Id), c.Request.Context())
+	if err != nil {
+		parts.ErrorInfo(err.Error()).Render(c.Request.Context(), c.Writer)
+		return
+	}
+
+	parts.AgentOverview(agent).Render(c, c.Writer)
+}
+
 // /parts/agent/overview/123
 func GetOverviewPart(c *gin.Context) {
 	currentUser := utils.GetCurrentUser(c)

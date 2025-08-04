@@ -5,8 +5,7 @@ import "strconv"
 
 templ AgentOverview(agent db.Agent) {
 	<form
-		hx-post={ "/parts/agent/overview/" + strconv.Itoa(int(agent.Id)) }
-		hx-method="GET"
+		hx-put={ "/agent/overview/" + strconv.Itoa(int(agent.Id)) }
 		hx-swap="outerHTML"
 		class="space-y-4"
 		data-editing="false"

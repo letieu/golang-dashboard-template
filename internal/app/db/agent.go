@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"database/sql"
 )
 
 type Agent struct {
@@ -33,6 +34,29 @@ func GetAgentsByUserId(userId int64, ctx context.Context) ([]Agent, error) {
 	}
 
 	return agents, nil
+}
+
+type AgentUserMapping struct {
+	userId  int
+	agentId int
+	role    sql.NullString
+}
+
+func GetAgentUserMapping(userId int, agentId int, ctx context.Context) (AgentUserMapping, error) {
+	var mapping AgentUserMapping
+	row := DbPool.QueryRowContext(ctx,
+		`SELECT role FROM agent_user WHERE user_id=? AND agent_id=?`,
+		userId, agentId,
+	)
+
+	err := row.Scan(&mapping.role)
+	if err != nil {
+		return AgentUserMapping{}, err
+	}
+	mapping.agentId = agentId
+	mapping.userId = userId
+
+	return mapping, nil
 }
 
 func GetAgentById(id int, userId int, ctx context.Context) (Agent, error) {
@@ -82,4 +106,24 @@ func CreateAgent(input CreateAgentInput, ctx context.Context) (int64, error) {
 	}
 
 	return agentId, nil
+}
+
+type UpdateAgentInput struct {
+	Id          int
+	Name        string
+	Industry    string
+	Personality string
+}
+
+func UpdateAgent(updateInput UpdateAgentInput, ctx context.Context) error {
+	_, err := DbPool.ExecContext(ctx, `
+		UPDATE agent
+        SET name = ?, industry = ?, personality = ?
+		WHERE id = ?
+		`, updateInput.Name, updateInput.Industry, updateInput.Personality, updateInput.Id)
+	if err != nil {
+		return nil
+	}
+
+	return nil
 }

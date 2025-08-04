@@ -19,7 +19,7 @@ func SetupRoutes(r *gin.Engine) {
 	{
 		authGroup.GET("/", handlers.Index)
 		authGroup.POST("/agent", handlers.CreateNewAgent)
+		authGroup.PUT("/agent/overview/:agentId", handlers.UpdateAgent)
 		authGroup.GET("/parts/agent/overview/:agentId", handlers.GetOverviewPart)
-		authGroup.POST("/parts/agent/overview/:agentId", handlers.GetOverviewPart) // TODO: handle update detail
 	}
 }
